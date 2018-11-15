@@ -305,7 +305,7 @@ void CENDOBENCH_VS2015Dlg::OnBnClickedBtntest()
 	// TODO: 在此添加控件通知处理程序代码
 
 	pthread = new std::thread(VideoThreadFunc,this);
-	
+	int a;
 }
 
 
