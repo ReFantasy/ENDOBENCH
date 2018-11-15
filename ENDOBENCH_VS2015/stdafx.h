@@ -51,4 +51,11 @@
 #endif
 #endif
 
-
+// 
+#include <opencv.hpp>
+#include <opencv2/opencv.hpp>
+#include <FlyCapture2.h>
+#include <FlyCapture2GUI.h>
+#define PI 3.141592653
+using namespace cv;
+using namespace FlyCapture2;

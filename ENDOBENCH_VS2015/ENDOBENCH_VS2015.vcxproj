@@ -75,9 +75,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\FlyCapture2\include;D:\FlyCapture2\include\C;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\FlyCapture2\lib64\C;D:\FlyCapture2\lib64;D:\FlyCapture2\lib64\vs2015;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\opencv\build\include\opencv2;D:\opencv\build\include\opencv;D:\opencv\build\include;D:\FlyCapture2\include;D:\FlyCapture2\include\C;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\FlyCapture2\lib64;D:\FlyCapture2\lib64\C;D:\FlyCapture2\lib64\vs2015;D:\opencv\build\x64\vc12\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -87,14 +91,15 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>FlyCapture2d_$(PlatformToolset).lib;FlyCapture2GUI.lib;opencv_world341d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -110,13 +115,17 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <PreprocessorDefinitions>_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
+      <Optimization>Disabled</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>FlyCapture2d_$(PlatformToolset).lib;FlyCapture2GUI.lib;opencv_ml2410d.lib;opencv_calib3d2410d.lib;opencv_contrib2410d.lib;opencv_core2410d.lib;opencv_features2d2410d.lib;opencv_flann2410d.lib;opencv_gpu2410d.lib;opencv_highgui2410d.lib;opencv_imgproc2410d.lib;opencv_legacy2410d.lib;opencv_objdetect2410d.lib;opencv_ts2410d.lib;opencv_video2410d.lib;opencv_nonfree2410d.lib;opencv_ocl2410d.lib;opencv_photo2410d.lib;opencv_stitching2410d.lib;opencv_superres2410d.lib;opencv_videostab2410d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -185,15 +194,30 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Auxilib.h" />
+    <ClInclude Include="camera.h" />
+    <ClInclude Include="CirclrDistortion.h" />
+    <ClInclude Include="CvvImage.h" />
+    <ClInclude Include="Distortion.h" />
     <ClInclude Include="ENDOBENCH_VS2015.h" />
     <ClInclude Include="ENDOBENCH_VS2015Dlg.h" />
+    <ClInclude Include="FovDlg.h" />
+    <ClInclude Include="ResolutionDlg.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="StcCurve.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="auxilib.cpp" />
+    <ClCompile Include="camera.cpp" />
+    <ClCompile Include="CvvImage.cpp" />
+    <ClCompile Include="Distortion.cpp" />
     <ClCompile Include="ENDOBENCH_VS2015.cpp" />
     <ClCompile Include="ENDOBENCH_VS2015Dlg.cpp" />
+    <ClCompile Include="FovDlg.cpp" />
+    <ClCompile Include="ResolutionDlg.cpp" />
+    <ClCompile Include="StcCurve.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -213,4 +237,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="ENDOBENCH_VS2015.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

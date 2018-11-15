@@ -33,6 +33,30 @@
     <ClInclude Include="Resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Auxilib.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CvvImage.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FovDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ResolutionDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Distortion.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="StcCurve.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CirclrDistortion.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ENDOBENCH_VS2015.cpp">
@@ -42,6 +66,27 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="auxilib.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CvvImage.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FovDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ResolutionDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Distortion.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="StcCurve.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
