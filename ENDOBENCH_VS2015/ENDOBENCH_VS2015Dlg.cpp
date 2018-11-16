@@ -13,6 +13,8 @@
 
 CString config_path("C:\\Users\\Simple\\Desktop\\ENDOBENCH_VS2015\\ENDOBENCH_VS2015\\x64\\Debug\\config.ini");
 
+itas109::CSerialPort serial_port;
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -69,6 +71,9 @@ void CENDOBENCH_VS2015Dlg::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_TREE1, tree_control);
 	DDX_Control(pDX, IDC_STATIC_CURVE, m_StcCurve);
+	DDX_Control(pDX, IDC_BUTTON1, btn_SelPortOpenCloseCtrl);
+	DDX_Control(pDX, IDC_EDIT1, edit_SelPortNO);
+	DDX_Control(pDX, IDC_EDIT2, m_ReceiveCtrl);
 }
 
 BEGIN_MESSAGE_MAP(CENDOBENCH_VS2015Dlg, CDialogEx)
@@ -82,6 +87,8 @@ BEGIN_MESSAGE_MAP(CENDOBENCH_VS2015Dlg, CDialogEx)
 	ON_NOTIFY(TVN_SELCHANGED, IDC_TREE1, &CENDOBENCH_VS2015Dlg::OnTvnSelchangedTree1)
 	ON_WM_MOUSEMOVE()
 	ON_STN_CLICKED(IDC_STATIC_CURVE, &CENDOBENCH_VS2015Dlg::OnStnClickedStaticCurve)
+	ON_BN_CLICKED(IDC_BUTTON1, &CENDOBENCH_VS2015Dlg::OnBnClickedButton1)
+	ON_MESSAGE(WM_COMM_RXSTR, &CENDOBENCH_VS2015Dlg::OnReceiveStr)
 END_MESSAGE_MAP()
 
 
@@ -304,8 +311,20 @@ void CENDOBENCH_VS2015Dlg::OnBnClickedBtntest()
 {
 	// TODO: 在此添加控件通知处理程序代码
 
-	pthread = new std::thread(VideoThreadFunc,this);
-	int a;
+	// 相机线程
+	//pthread = new std::thread(VideoThreadFunc,this);
+	
+	// 串口
+	int SelPortNO, SelBaudRate;
+	bool is_sp_open = serial_port.InitPort(this->GetSafeHwnd(), 1);
+	if (is_sp_open)
+	{
+		AfxMessageBox(_T("打开成功"));
+	}
+	else
+	{
+		AfxMessageBox(_T("打开失败"));
+	}
 }
 
 
@@ -606,4 +625,67 @@ void CENDOBENCH_VS2015Dlg::OnMouseMove(UINT nFlags, CPoint point)
 void CENDOBENCH_VS2015Dlg::OnStnClickedStaticCurve()
 {
 	// TODO: 在此添加控件通知处理程序代码
+}
+
+
+// 打开关闭串口按钮
+void CENDOBENCH_VS2015Dlg::OnBnClickedButton1()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CString temp;
+	btn_SelPortOpenCloseCtrl.GetWindowTextW(temp);
+	if (temp == _T("Close Port"))
+	{
+		serial_port.ClosePort();
+		btn_SelPortOpenCloseCtrl.SetWindowTextW(_T("Open Port"));
+		AfxMessageBox(_T("Close serial port success！"));
+	}
+	else
+	{
+		// 获取端口号
+		CString SelPortNO;
+		edit_SelPortNO.GetWindowTextW(SelPortNO);
+		// 如果串口号不是正整数失败
+		if (!_ttoi(SelPortNO))
+		{
+			AfxMessageBox(_T("请先输入需要打开串口编号(正整数)"));
+			return;
+		}
+		// 打开串口
+		bool is_open = serial_port.InitPort(this->GetSafeHwnd(), _ttoi(SelPortNO));
+		if (is_open)
+		{
+			serial_port.StartMonitoring();
+			btn_SelPortOpenCloseCtrl.SetWindowText(_T("Close Port"));
+			AfxMessageBox(_T("Open serial port success！"));
+		}
+		else
+		{
+			AfxMessageBox(_T("Open serial port failure！Mabye the port is absent or occupied!"));
+		}
+	}
+}
+
+LRESULT CENDOBENCH_VS2015Dlg::OnReceiveStr(WPARAM str, LPARAM commInfo)
+{
+	struct serialPortInfo
+	{
+		UINT portNr;//串口号
+		DWORD bytesRead;//读取的字节数
+	}*pCommInfo;
+	pCommInfo = (serialPortInfo*)commInfo;
+
+	CString str1((char*)str);
+
+	int len = _tcslen(str1.GetBuffer(0));
+	if (len == pCommInfo->bytesRead)
+	{
+		m_ReceiveCtrl.SetSel(-1, -1);
+		m_ReceiveCtrl.ReplaceSel(str1);
+	}
+	else
+	{
+		AfxMessageBox(_T("数据长度错误"));
+	}
+	return TRUE;
 }

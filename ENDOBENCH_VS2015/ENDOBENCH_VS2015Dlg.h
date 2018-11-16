@@ -12,6 +12,7 @@
 #include "ResolutionDlg.h"
 #include "Distortion.h"
 #include "afxwin.h"
+#include "SerialPort.h"
 
 extern CString config_path;
 
@@ -22,7 +23,9 @@ extern CString config_path;
 
 enum class Status { SFOV, SResolution, SDistortion, SDetection };
 enum class DistortionSelected { top, bottom, left, right, center, None };
-//enum class SelectStatus {FOV1, Resolution, Distortion, Detection};
+
+// 串口对象
+extern itas109::CSerialPort serial_port;
 
 // CENDOBENCH_VS2015Dlg 对话框
 class CENDOBENCH_VS2015Dlg : public CDialogEx
@@ -50,6 +53,7 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+	afx_msg LRESULT OnReceiveStr(WPARAM str, LPARAM commInfo);
 public:
 	// show image to Picture Control whose id is ID
 	void ShowImage(IplImage* image, UINT ID);
@@ -78,6 +82,12 @@ public:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	CStcCurve m_StcCurve;
 	afx_msg void OnStnClickedStaticCurve();
+
+	
+	CButton btn_SelPortOpenCloseCtrl;
+	afx_msg void OnBnClickedButton1();
+	CEdit edit_SelPortNO;
+	CEdit m_ReceiveCtrl;
 };
 // 视频线程回调函数
 void VideoThreadFunc(CENDOBENCH_VS2015Dlg *pMainthread);
