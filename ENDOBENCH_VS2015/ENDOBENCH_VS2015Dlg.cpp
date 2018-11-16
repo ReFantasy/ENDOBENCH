@@ -16,6 +16,8 @@ CString config_path("C:\\Users\\Simple\\Desktop\\ENDOBENCH_VS2015\\ENDOBENCH_VS2
 
 itas109::CSerialPort serial_port;
 
+
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -662,6 +664,46 @@ void CENDOBENCH_VS2015Dlg::OnBnClickedButton1()
 			AfxMessageBox(_T("Open serial port failure£¡Mabye the port is absent or occupied!"));
 		}
 	}
+}
+
+
+void CENDOBENCH_VS2015Dlg::example_read_write(const char* from, const char* to)
+{
+	cout << "read " << from << endl;
+	BasicExcel xls(from);
+
+	XLSFormatManager fmt_mgr(xls);
+	BasicExcelWorksheet* sheet = xls.GetWorksheet(0);
+
+	CellFormat fmt_general(fmt_mgr);
+
+	fmt_general.set_format_string("0.000");
+
+	for (int y = 0; y < 2; ++y) {
+		for (int x = 0; x < 2; ++x) {
+			cout << y << "/" << x;
+
+			BasicExcelCell* cell = sheet->Cell(y, x);
+
+			CellFormat fmt(fmt_mgr, cell);
+
+			//			cout << " - xf_idx=" << cell->GetXFormatIdx();
+
+			const Workbook::Font& font = fmt_mgr.get_font(fmt);
+			string font_name = stringFromSmallString(font.name_);
+			cout << "  font name: " << font_name;
+
+			const wstring& fmt_string = fmt.get_format_string();
+			cout << "  format: " << narrow_string(fmt_string);
+
+			cell->SetFormat(fmt_general);
+
+			cout << endl;
+		}
+	}
+
+	cout << "write: " << from << endl;
+	xls.SaveAs(to);
 }
 
 LRESULT CENDOBENCH_VS2015Dlg::OnReceiveStr(WPARAM str, LPARAM commInfo)
