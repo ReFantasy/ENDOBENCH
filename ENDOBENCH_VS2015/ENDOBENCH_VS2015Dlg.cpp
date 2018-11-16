@@ -321,7 +321,7 @@ void CENDOBENCH_VS2015Dlg::OnBnClickedBtntest()
 
 	// 相机线程
 	//pthread = new std::thread(VideoThreadFunc,this);
-	
+	example_read_write("test.xls", "result.xls");
 	
 }
 
@@ -669,6 +669,8 @@ void CENDOBENCH_VS2015Dlg::OnBnClickedButton1()
 
 void CENDOBENCH_VS2015Dlg::example_read_write(const char* from, const char* to)
 {
+	AllocConsole();
+	freopen("CONOUT$", "w", stdout);
 	cout << "read " << from << endl;
 	BasicExcel xls(from);
 
@@ -679,8 +681,10 @@ void CENDOBENCH_VS2015Dlg::example_read_write(const char* from, const char* to)
 
 	fmt_general.set_format_string("0.000");
 
-	for (int y = 0; y < 2; ++y) {
-		for (int x = 0; x < 2; ++x) {
+	for (int y = 0; y < 2; ++y) 
+	{
+		for (int x = 0; x < 2; ++x)
+		{
 			cout << y << "/" << x;
 
 			BasicExcelCell* cell = sheet->Cell(y, x);
