@@ -320,17 +320,7 @@ void CENDOBENCH_VS2015Dlg::OnBnClickedBtntest()
 	// 相机线程
 	//pthread = new std::thread(VideoThreadFunc,this);
 	
-	// 串口
-	int SelPortNO, SelBaudRate;
-	bool is_sp_open = serial_port.InitPort(this->GetSafeHwnd(), 1);
-	if (is_sp_open)
-	{
-		AfxMessageBox(_T("打开成功"));
-	}
-	else
-	{
-		AfxMessageBox(_T("打开失败"));
-	}
+	
 }
 
 
