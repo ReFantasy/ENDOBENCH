@@ -118,7 +118,6 @@
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <PreprocessorDefinitions>_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
-      <Optimization>Disabled</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
@@ -197,6 +196,8 @@
     <ClInclude Include="Auxilib.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="CirclrDistortion.h" />
+    <ClInclude Include="ComCorrect.h" />
+    <ClInclude Include="ConfigFile.h" />
     <ClInclude Include="CvvImage.h" />
     <ClInclude Include="Distortion.h" />
     <ClInclude Include="ENDOBENCH_VS2015.h" />
@@ -212,6 +213,8 @@
   <ItemGroup>
     <ClCompile Include="auxilib.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="ComCorrect.cpp" />
+    <ClCompile Include="ConfigFile.cpp" />
     <ClCompile Include="CvvImage.cpp" />
     <ClCompile Include="Distortion.cpp" />
     <ClCompile Include="ENDOBENCH_VS2015.cpp" />

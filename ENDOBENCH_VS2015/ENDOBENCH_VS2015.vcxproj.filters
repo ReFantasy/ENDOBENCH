@@ -60,6 +60,12 @@
     <ClInclude Include="SerialPort.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="ComCorrect.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ConfigFile.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ENDOBENCH_VS2015.cpp">
@@ -93,6 +99,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="SerialPort.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ComCorrect.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ConfigFile.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

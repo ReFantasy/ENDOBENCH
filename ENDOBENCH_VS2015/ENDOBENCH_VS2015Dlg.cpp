@@ -10,6 +10,7 @@
 #include "Auxilib.h"
 #include <thread>
 #include "camera.h"
+#include "ComCorrect.h"
 
 CString config_path("C:\\Users\\Simple\\Desktop\\ENDOBENCH_VS2015\\ENDOBENCH_VS2015\\x64\\Debug\\config.ini");
 
@@ -124,6 +125,11 @@ BOOL CENDOBENCH_VS2015Dlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
+	CFont font; // 设置串口数据显示字体
+	font.CreateFont(16, 6, 0, 0, 600,
+		TRUE, FALSE, FALSE, 0, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_ROMAN, _T("Arial"));
+	m_ReceiveCtrl.SetFont(&font);
+	
 	// 初始化树形控件
 	InitTreeControl();
 
@@ -638,7 +644,7 @@ void CENDOBENCH_VS2015Dlg::OnBnClickedButton1()
 	{
 		serial_port.ClosePort();
 		btn_SelPortOpenCloseCtrl.SetWindowTextW(_T("Open Port"));
-		AfxMessageBox(_T("Close serial port success！"));
+		//AfxMessageBox(_T("Close serial port success！"));
 	}
 	else
 	{
@@ -657,7 +663,9 @@ void CENDOBENCH_VS2015Dlg::OnBnClickedButton1()
 		{
 			serial_port.StartMonitoring();
 			btn_SelPortOpenCloseCtrl.SetWindowText(_T("Close Port"));
-			AfxMessageBox(_T("Open serial port success！"));
+			// 加载串口校正数据
+			LoadIni();
+			//AfxMessageBox(_T("Open serial port success！"));
 		}
 		else
 		{
@@ -675,17 +683,28 @@ LRESULT CENDOBENCH_VS2015Dlg::OnReceiveStr(WPARAM str, LPARAM commInfo)
 	}*pCommInfo;
 	pCommInfo = (serialPortInfo*)commInfo;
 
-	CString str1((char*)str);
+	// 接收到的数据长度
+	int len = pCommInfo->bytesRead;
+	// 读取数据
+	std::string tmp = std::string((char*)str, (char*)str + len);
 
-	int len = _tcslen(str1.GetBuffer(0));
-	if (len == pCommInfo->bytesRead)
+	// 每达到256字节就输出
+	static string out_put;
+	out_put += tmp;
+	if (out_put.size() >= 128)
 	{
-		m_ReceiveCtrl.SetSel(-1, -1);
-		m_ReceiveCtrl.ReplaceSel(str1);
-	}
-	else
-	{
-		AfxMessageBox(_T("数据长度错误"));
+		// 此处的数据解析以及校正算法为光学院提供
+		std::string SA = GetSubA(out_put);
+		std::string SB = GetSubB(out_put);
+		double A = Convert_To_Real_CH1(SA);
+		double B = Convert_To_Real_CH2(SB);
+		CString distance(std::to_string(A).c_str());
+		CString angle(std::to_string(B).c_str());
+
+		CString received = CString("距离: ") + distance + "  " + CString("角度: ") + angle;
+		m_ReceiveCtrl.SetWindowTextW(received);
+		out_put.clear();
+		UpdateData(FALSE);
 	}
 	return TRUE;
 }
