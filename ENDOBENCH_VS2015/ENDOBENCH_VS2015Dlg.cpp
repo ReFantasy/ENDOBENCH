@@ -79,6 +79,7 @@ void CENDOBENCH_VS2015Dlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_BUTTON1, btn_SelPortOpenCloseCtrl);
 	DDX_Control(pDX, IDC_EDIT1, edit_SelPortNO);
 	DDX_Control(pDX, IDC_EDIT2, m_ReceiveCtrl);
+	DDX_Control(pDX, IDC_EDIT3, color_coef);
 }
 
 BEGIN_MESSAGE_MAP(CENDOBENCH_VS2015Dlg, CDialogEx)
@@ -94,6 +95,7 @@ BEGIN_MESSAGE_MAP(CENDOBENCH_VS2015Dlg, CDialogEx)
 	ON_STN_CLICKED(IDC_STATIC_CURVE, &CENDOBENCH_VS2015Dlg::OnStnClickedStaticCurve)
 	ON_BN_CLICKED(IDC_BUTTON1, &CENDOBENCH_VS2015Dlg::OnBnClickedButton1)
 	ON_MESSAGE(WM_COMM_RXSTR, &CENDOBENCH_VS2015Dlg::OnReceiveStr)
+	ON_BN_CLICKED(IDC_BUTTON2, &CENDOBENCH_VS2015Dlg::OnBnClickedButton2)
 END_MESSAGE_MAP()
 
 
@@ -325,15 +327,15 @@ void CENDOBENCH_VS2015Dlg::OnBnClickedBtntest()
 	//pthread = new std::thread(VideoThreadFunc,this);
 	
 	// 测试Excel显色计算器
-	CMyExcel me;
-	//设置输入数据
-	me.SetInput("D:/t1.xls");
-	double ctt, cier;
-	//计算显色指数及色温
-	me.GetOutput(ctt, cier);
-	CString str;
-	str.Format("色温：%lf,显色指数%lf", ctt, cier);
-	AfxMessageBox(str);
+	//CMyExcel me;
+	////设置输入数据
+	//me.SetInput("D:/t1.xls");
+	//double ctt, cier;
+	////计算显色指数及色温
+	//me.GetOutput(ctt, cier);
+	//CString str;
+	//str.Format("色温：%lf,显色指数%lf", ctt, cier);
+	//AfxMessageBox(str);
 	
 }
 
@@ -712,4 +714,41 @@ LRESULT CENDOBENCH_VS2015Dlg::OnReceiveStr(WPARAM str, LPARAM commInfo)
 		UpdateData(FALSE);
 	}
 	return TRUE;
+}
+
+void CENDOBENCH_VS2015Dlg::OnBnClickedButton2()
+{
+	// TODO: 在此添加控件通知处理程序代码
+
+	// 选择打开的文件
+	
+	// 构造打开文件对话框   
+	CFileDialog fileDlg(TRUE);
+	CString strFilePath;
+
+	// 显示打开文件对话框   
+	if (IDOK == fileDlg.DoModal())
+	{
+		// 如果点击了文件对话框上的“打开”按钮，则将选择的文件路径显示到编辑框里   
+		strFilePath = fileDlg.GetPathName();
+	}
+	
+	std::string file_name(strFilePath.GetBuffer(strFilePath.GetLength()));
+	
+	if (file_name.find(".xls") >= file_name.size())
+	{
+		AfxMessageBox(_T("File is not .xls"));
+		return;
+	}
+	color_coef.SetWindowTextA(CString("正在计算，请稍后..."));
+	// 计算显色性
+	CMyExcel me;
+	//设置输入数据
+	me.SetInput(const_cast<char*>(file_name.c_str()));
+	double ctt, cier;
+	//计算显色指数及色温
+	me.GetOutput(ctt, cier);
+	CString str;
+	str.Format("色温：%lf,显色指数%lf", ctt, cier);
+	color_coef.SetWindowTextA(str);
 }
