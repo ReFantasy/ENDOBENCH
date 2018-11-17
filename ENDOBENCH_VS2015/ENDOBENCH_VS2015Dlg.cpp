@@ -11,6 +11,8 @@
 #include <thread>
 #include "camera.h"
 #include "ComCorrect.h"
+#include "MyExcel.h"
+#include "excel.h"
 
 CString config_path("C:\\Users\\Simple\\Desktop\\ENDOBENCH_VS2015\\ENDOBENCH_VS2015\\x64\\Debug\\config.ini");
 
@@ -321,7 +323,17 @@ void CENDOBENCH_VS2015Dlg::OnBnClickedBtntest()
 
 	// 相机线程
 	//pthread = new std::thread(VideoThreadFunc,this);
-	example_read_write("test.xls", "result.xls");
+	
+	// 测试Excel显色计算器
+	CMyExcel me;
+	//设置输入数据
+	me.SetInput("D:/t1.xls");
+	double ctt, cier;
+	//计算显色指数及色温
+	me.GetOutput(ctt, cier);
+	CString str;
+	str.Format("色温：%lf,显色指数%lf", ctt, cier);
+	AfxMessageBox(str);
 	
 }
 
@@ -631,18 +643,18 @@ void CENDOBENCH_VS2015Dlg::OnBnClickedButton1()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	CString temp;
-	btn_SelPortOpenCloseCtrl.GetWindowTextW(temp);
+	btn_SelPortOpenCloseCtrl.GetWindowText(temp);
 	if (temp == _T("Close Port"))
 	{
 		serial_port.ClosePort();
-		btn_SelPortOpenCloseCtrl.SetWindowTextW(_T("Open Port"));
+		btn_SelPortOpenCloseCtrl.SetWindowText(_T("Open Port"));
 		//AfxMessageBox(_T("Close serial port success！"));
 	}
 	else
 	{
 		// 获取端口号
 		CString SelPortNO;
-		edit_SelPortNO.GetWindowTextW(SelPortNO);
+		edit_SelPortNO.GetWindowText(SelPortNO);
 		// 如果串口号不是正整数失败
 		if (!_ttoi(SelPortNO))
 		{
@@ -666,49 +678,6 @@ void CENDOBENCH_VS2015Dlg::OnBnClickedButton1()
 	}
 }
 
-
-void CENDOBENCH_VS2015Dlg::example_read_write(const char* from, const char* to)
-{
-	AllocConsole();
-	freopen("CONOUT$", "w", stdout);
-	cout << "read " << from << endl;
-	BasicExcel xls(from);
-
-	XLSFormatManager fmt_mgr(xls);
-	BasicExcelWorksheet* sheet = xls.GetWorksheet(0);
-
-	CellFormat fmt_general(fmt_mgr);
-
-	fmt_general.set_format_string("0.000");
-
-	for (int y = 0; y < 2; ++y) 
-	{
-		for (int x = 0; x < 2; ++x)
-		{
-			cout << y << "/" << x;
-
-			BasicExcelCell* cell = sheet->Cell(y, x);
-
-			CellFormat fmt(fmt_mgr, cell);
-
-			//			cout << " - xf_idx=" << cell->GetXFormatIdx();
-
-			const Workbook::Font& font = fmt_mgr.get_font(fmt);
-			string font_name = stringFromSmallString(font.name_);
-			cout << "  font name: " << font_name;
-
-			const wstring& fmt_string = fmt.get_format_string();
-			cout << "  format: " << narrow_string(fmt_string);
-
-			cell->SetFormat(fmt_general);
-
-			cout << endl;
-		}
-	}
-
-	cout << "write: " << from << endl;
-	xls.SaveAs(to);
-}
 
 LRESULT CENDOBENCH_VS2015Dlg::OnReceiveStr(WPARAM str, LPARAM commInfo)
 {
@@ -738,7 +707,7 @@ LRESULT CENDOBENCH_VS2015Dlg::OnReceiveStr(WPARAM str, LPARAM commInfo)
 		CString angle(std::to_string(B).c_str());
 
 		CString received = CString("距离: ") + distance + "  " + CString("角度: ") + angle;
-		m_ReceiveCtrl.SetWindowTextW(received);
+		m_ReceiveCtrl.SetWindowText(received);
 		out_put.clear();
 		UpdateData(FALSE);
 	}

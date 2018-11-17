@@ -66,10 +66,10 @@
     <ClInclude Include="ConfigFile.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="BasicExcel.hpp">
+    <ClInclude Include="excel.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ExcelFormat.h">
+    <ClInclude Include="MyExcel.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -113,10 +113,10 @@
     <ClCompile Include="ConfigFile.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="BasicExcel.cpp">
+    <ClCompile Include="excel.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ExcelFormat.cpp">
+    <ClCompile Include="MyExcel.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

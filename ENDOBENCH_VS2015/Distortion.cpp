@@ -40,32 +40,32 @@ void DistortionDlg::ReadCircleCrd()
 	CString str_value('1', 256);
 
 	GetPrivateProfileString(_T("Distortion"), _T("top_x"), _T("25"), str_value.GetBuffer(0), 256, config_path);
-	top_x = _wtof(str_value);
+	top_x = atof(str_value);
 	GetPrivateProfileString(_T("Distortion"), _T("top_y"), _T("25"), str_value.GetBuffer(0), 256, config_path);
-	top_y = _wtof(str_value);
+	top_y = atof(str_value);
 
 	GetPrivateProfileString(_T("Distortion"), _T("bottom_x"), _T("25"), str_value.GetBuffer(0), 256, config_path);
-	bottom_x = _wtof(str_value);
+	bottom_x = atof(str_value);
 	GetPrivateProfileString(_T("Distortion"), _T("bottom_y"), _T("25"), str_value.GetBuffer(0), 256, config_path);
-	bottom_y = _wtof(str_value);
+	bottom_y = atof(str_value);
 
 	GetPrivateProfileString(_T("Distortion"), _T("left_x"), _T("25"), str_value.GetBuffer(0), 256, config_path);
-	left_x = _wtof(str_value);
+	left_x = atof(str_value);
 	GetPrivateProfileString(_T("Distortion"), _T("left_y"), _T("25"), str_value.GetBuffer(0), 256, config_path);
-	left_y = _wtof(str_value);
+	left_y = atof(str_value);
 
 	GetPrivateProfileString(_T("Distortion"), _T("right_x"), _T("25"), str_value.GetBuffer(0), 256, config_path);
-	right_x = _wtof(str_value);
+	right_x = atof(str_value);
 	GetPrivateProfileString(_T("Distortion"), _T("right_y"), _T("25"), str_value.GetBuffer(0), 256, config_path);
-	right_y = _wtof(str_value);
+	right_y = atof(str_value);
 
 	GetPrivateProfileString(_T("Distortion"), _T("center_x"), _T("25"), str_value.GetBuffer(0), 256, config_path);
-	center_x = _wtof(str_value);
+	center_x = atof(str_value);
 	GetPrivateProfileString(_T("Distortion"), _T("center_y"), _T("25"), str_value.GetBuffer(0), 256, config_path);
-	center_y = _wtof(str_value);
+	center_y = atof(str_value);
 
 	GetPrivateProfileString(_T("Distortion"), _T("circle_radius"), _T("25"), str_value.GetBuffer(0), 256, config_path);
-	circle_radius = _wtof(str_value);
+	circle_radius = atof(str_value);
 
 }
 
@@ -140,9 +140,9 @@ double DistortionDlg::ComputeDiameter(const cv::Mat _img, int dic)
 
 void DistortionDlg::UpdateTreeControl()
 {
-	auto pmain_window = (CENDOBENCH_VS2015Dlg*)GetParent();
-	auto &distortion_ref = pmain_window->distortion_dlg;
-	auto& tree_control = pmain_window->tree_control;
+	auto pmainaindow = (CENDOBENCH_VS2015Dlg*)GetParent();
+	auto &distortion_ref = pmainaindow->distortion_dlg;
+	auto& tree_control = pmainaindow->tree_control;
 	//查找Resolution的第一个节点
 	HTREEITEM hRoot = tree_control.GetRootItem();
 	hRoot = tree_control.GetChildItem(hRoot);

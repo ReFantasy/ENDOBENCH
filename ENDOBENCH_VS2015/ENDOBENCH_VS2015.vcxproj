@@ -44,7 +44,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -195,7 +195,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Auxilib.h" />
-    <ClInclude Include="BasicExcel.hpp" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="CirclrDistortion.h" />
     <ClInclude Include="ComCorrect.h" />
@@ -204,8 +203,9 @@
     <ClInclude Include="Distortion.h" />
     <ClInclude Include="ENDOBENCH_VS2015.h" />
     <ClInclude Include="ENDOBENCH_VS2015Dlg.h" />
-    <ClInclude Include="ExcelFormat.h" />
+    <ClInclude Include="excel.h" />
     <ClInclude Include="FovDlg.h" />
+    <ClInclude Include="MyExcel.h" />
     <ClInclude Include="ResolutionDlg.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SerialPort.h" />
@@ -215,7 +215,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="auxilib.cpp" />
-    <ClCompile Include="BasicExcel.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="ComCorrect.cpp" />
     <ClCompile Include="ConfigFile.cpp" />
@@ -223,8 +222,9 @@
     <ClCompile Include="Distortion.cpp" />
     <ClCompile Include="ENDOBENCH_VS2015.cpp" />
     <ClCompile Include="ENDOBENCH_VS2015Dlg.cpp" />
-    <ClCompile Include="ExcelFormat.cpp" />
+    <ClCompile Include="excel.cpp" />
     <ClCompile Include="FovDlg.cpp" />
+    <ClCompile Include="MyExcel.cpp" />
     <ClCompile Include="ResolutionDlg.cpp" />
     <ClCompile Include="SerialPort.cpp" />
     <ClCompile Include="StcCurve.cpp" />

@@ -14,10 +14,6 @@
 #include "afxwin.h"
 #include "SerialPort.h"
 
-#include "BasicExcel.hpp"
-#include "ExcelFormat.h"
-using namespace YExcel;
-using namespace ExcelFormat;
 
 
 
@@ -95,7 +91,7 @@ public:
 	afx_msg void OnBnClickedButton1();
 	CEdit edit_SelPortNO;
 	CEdit m_ReceiveCtrl;
-	void example_read_write(const char* from, const char* to);
+	
 };
 // 视频线程回调函数
 void VideoThreadFunc(CENDOBENCH_VS2015Dlg *pMainthread);
