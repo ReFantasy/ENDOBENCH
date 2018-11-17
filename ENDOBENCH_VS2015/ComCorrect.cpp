@@ -17,7 +17,7 @@ double CH_2_Point_N;
 void LoadIni()
 {
 	ConfigFile config_file;
-	config_file.ReadConfigFile("C:\\Users\\MICCAI\\Desktop\\Config.ini");
+	config_file.ReadConfigFile("ComConfig.ini");
 
 	CH_1_Point_N = config_file.GetValueToDouble("CH1_Adjust_N");
 	//»ù×¼Öµ
