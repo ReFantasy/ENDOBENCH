@@ -13,8 +13,9 @@
 #include "ComCorrect.h"
 #include "MyExcel.h"
 #include "excel.h"
+#include <string>
 
-CString config_path("C:\\Users\\Simple\\Desktop\\ENDOBENCH_VS2015\\ENDOBENCH_VS2015\\x64\\Debug\\config.ini");
+std::string config_path("config.ini");
 
 itas109::CSerialPort serial_port;
 

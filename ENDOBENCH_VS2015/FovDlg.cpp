@@ -6,7 +6,7 @@
 #include "ENDOBENCH_VS2015Dlg.h"
 #include "FovDlg.h"
 #include "afxdialogex.h"
-
+#include "ConfigFile.h"
 
 // FovDlg 对话框
 
@@ -53,13 +53,11 @@ void FovDlg::OnBnClickedButton1()
 	// TODO: 在此添加控件通知处理程序代码
 	UpdateData(TRUE);
 	// 读取D1 D2
-	//CString file_path("C:\\Users\\Simple\\Desktop\\ENDOBENCH_VS2015\\ENDOBENCH_VS2015\\x64\\Debug\\config.ini");
-	CString strD1('1',256);
-	GetPrivateProfileString(_T("FOV"), _T("D1"), _T("25"), strD1.GetBuffer(0), 256, config_path);
-	D1 = atof(strD1);
-	CString strD2('1', 256);
-	GetPrivateProfileString(_T("FOV"), _T("D2"), _T("50"), strD2.GetBuffer(0), 256, config_path);
-	D2 = atof(strD2);
+	ConfigFile cf;
+	cf.ReadConfigFile(config_path);
+	D1 = cf.GetValueToDouble("D1");
+	
+	D2 = cf.GetValueToDouble("D2");
 
 	// 计算其他值
 	rfov = 2*atan((D2 - D1) / 2.0 / (d2 - d1));

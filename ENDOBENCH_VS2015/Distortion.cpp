@@ -9,7 +9,7 @@
 #include "camera.h"
 #include "CirclrDistortion.h"
 #include "Auxilib.h"
-
+#include "ConfigFile.h"
 
 // Distortion ¶Ô»°¿ò
 
@@ -35,37 +35,26 @@ DistortionDlg::~DistortionDlg()
 
 void DistortionDlg::ReadCircleCrd()
 {
+	ConfigFile cf;
+	cf.ReadConfigFile(config_path);
+
+
+	top_x = cf.GetValueToDouble("top_x");
+	top_y = cf.GetValueToDouble("top_y");
 	
-	//CString file_path("C:\\Users\\Simple\\Desktop\\ENDOBENCH_VS2015\\ENDOBENCH_VS2015\\x64\\Debug\\config.ini");
-	CString str_value('1', 256);
+	bottom_x = cf.GetValueToDouble("bottom_x");
+	bottom_y = cf.GetValueToDouble("bottom_y");
 
-	GetPrivateProfileString(_T("Distortion"), _T("top_x"), _T("25"), str_value.GetBuffer(0), 256, config_path);
-	top_x = atof(str_value);
-	GetPrivateProfileString(_T("Distortion"), _T("top_y"), _T("25"), str_value.GetBuffer(0), 256, config_path);
-	top_y = atof(str_value);
+	left_x = cf.GetValueToDouble("left_x");
+	left_y = cf.GetValueToDouble("left_y");
+	
+	right_x = cf.GetValueToDouble("right_x");
+	right_y = cf.GetValueToDouble("right_y");
 
-	GetPrivateProfileString(_T("Distortion"), _T("bottom_x"), _T("25"), str_value.GetBuffer(0), 256, config_path);
-	bottom_x = atof(str_value);
-	GetPrivateProfileString(_T("Distortion"), _T("bottom_y"), _T("25"), str_value.GetBuffer(0), 256, config_path);
-	bottom_y = atof(str_value);
-
-	GetPrivateProfileString(_T("Distortion"), _T("left_x"), _T("25"), str_value.GetBuffer(0), 256, config_path);
-	left_x = atof(str_value);
-	GetPrivateProfileString(_T("Distortion"), _T("left_y"), _T("25"), str_value.GetBuffer(0), 256, config_path);
-	left_y = atof(str_value);
-
-	GetPrivateProfileString(_T("Distortion"), _T("right_x"), _T("25"), str_value.GetBuffer(0), 256, config_path);
-	right_x = atof(str_value);
-	GetPrivateProfileString(_T("Distortion"), _T("right_y"), _T("25"), str_value.GetBuffer(0), 256, config_path);
-	right_y = atof(str_value);
-
-	GetPrivateProfileString(_T("Distortion"), _T("center_x"), _T("25"), str_value.GetBuffer(0), 256, config_path);
-	center_x = atof(str_value);
-	GetPrivateProfileString(_T("Distortion"), _T("center_y"), _T("25"), str_value.GetBuffer(0), 256, config_path);
-	center_y = atof(str_value);
-
-	GetPrivateProfileString(_T("Distortion"), _T("circle_radius"), _T("25"), str_value.GetBuffer(0), 256, config_path);
-	circle_radius = atof(str_value);
+	center_x = cf.GetValueToDouble("center_x");
+	center_y = cf.GetValueToDouble("center_y");
+	
+	circle_radius = cf.GetValueToDouble("circle_radius");
 
 }
 

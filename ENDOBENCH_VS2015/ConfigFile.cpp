@@ -68,7 +68,7 @@ bool ConfigFile::Split(string line, string &key, string &value)
 std::string ConfigFile::EraseSpace(string &s)
 {
 	if (s.empty())
-		return s;
+		return std::string("0");
 
 	string::iterator b, e;
 	for (int i = 0; i < s.size(); i++)

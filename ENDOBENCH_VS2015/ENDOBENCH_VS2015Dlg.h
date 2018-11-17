@@ -13,11 +13,11 @@
 #include "Distortion.h"
 #include "afxwin.h"
 #include "SerialPort.h"
+#include <string>
 
 
 
-
-extern CString config_path;
+extern std::string config_path;
 
 #define FOV 1
 #define Resolution 2
