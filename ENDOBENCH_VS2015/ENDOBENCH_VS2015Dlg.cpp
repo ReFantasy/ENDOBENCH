@@ -327,7 +327,13 @@ void CENDOBENCH_VS2015Dlg::OnBnClickedBtntest()
 	// TODO: 在此添加控件通知处理程序代码
 
 	// 相机线程
-	//pthread = new std::thread(VideoThreadFunc,this);
+	static int n = 1;
+	if (n == 1)
+	{
+		pthread = new std::thread(VideoThreadFunc, this);
+		
+	}
+	n++;
 	
 	// 测试Excel显色计算器
 	//CMyExcel me;
