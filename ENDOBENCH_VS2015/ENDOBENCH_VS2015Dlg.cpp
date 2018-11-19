@@ -14,6 +14,8 @@
 #include "MyExcel.h"
 #include "excel.h"
 #include <string>
+#include "Mtf.h"
+#include "ConfigFile.h"
 
 std::string config_path("config.ini");
 
@@ -337,6 +339,51 @@ void CENDOBENCH_VS2015Dlg::OnBnClickedBtntest()
 	//CString str;
 	//str.Format("色温：%lf,显色指数%lf", ctt, cier);
 	//AfxMessageBox(str);
+
+	// 直刀口法
+	if (status == Status::SDetection && SingletonCamera::GetInstance()->IsConnected())
+	{
+		SingletonCamera::image_type raw_img;
+		SingletonCamera::GetInstance()->RetrieveBuffer(&raw_img);
+		cv::Mat src;
+		ConvertToMatImage(raw_img, src);
+
+		IplImage ipl_src = IplImage(src);
+		
+		// 读取配置参数
+		ConfigFile cf;
+		cf.ReadConfigFile(config_path);
+		int n = cf.GetValueToInt("n");
+		double dPixel = cf.GetValueToDouble("dPixel");
+		double dZool = cf.GetValueToDouble("dZool");
+
+		// 计算MTF并显示曲线
+		int nNum;
+		double cx[11], cy[11];
+		CMtf mtf(&ipl_src,
+			     n,
+			     intercept_rect.left + intercept_rect.Width() / 2,
+			     intercept_rect.top + intercept_rect.Height() / 2,
+			     dPixel,
+			     dZool);
+		
+
+		double* pdX = mtf.GetMtfX(nNum);
+		double* pdY = mtf.GetMtfY(nNum);
+
+		for (int i = 0; i < 11; i++)
+		{
+			//X轴坐标刻度
+			cx[i] = (double)i * 5;
+			//Y轴坐标刻度
+			cy[i] = (double)i / 10.;
+		}
+		m_StcCurve.Remove();
+		m_StcCurve.AddInput(pdX, pdY, nNum, false, true);
+		m_StcCurve.SetCoordinate(cx, cy, 11, 11);
+		m_StcCurve.InitData();
+	}
+	
 	
 }
 

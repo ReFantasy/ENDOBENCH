@@ -205,6 +205,7 @@
     <ClInclude Include="ENDOBENCH_VS2015Dlg.h" />
     <ClInclude Include="excel.h" />
     <ClInclude Include="FovDlg.h" />
+    <ClInclude Include="Mtf.h" />
     <ClInclude Include="MyExcel.h" />
     <ClInclude Include="ResolutionDlg.h" />
     <ClInclude Include="Resource.h" />
@@ -224,6 +225,7 @@
     <ClCompile Include="ENDOBENCH_VS2015Dlg.cpp" />
     <ClCompile Include="excel.cpp" />
     <ClCompile Include="FovDlg.cpp" />
+    <ClCompile Include="Mtf.cpp" />
     <ClCompile Include="MyExcel.cpp" />
     <ClCompile Include="ResolutionDlg.cpp" />
     <ClCompile Include="SerialPort.cpp" />

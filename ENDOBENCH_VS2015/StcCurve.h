@@ -41,7 +41,8 @@ class CStcCurve : public CStatic
 public:
 	CStcCurve();
 	virtual ~CStcCurve();
-
+	//数据初始化，根据客户区大小创建图像，设置位图文件信息
+	void InitData(void);
 protected:
 	DECLARE_MESSAGE_MAP()
 	//在图像src上，点pt1,pt2之间绘制虚线，虚线颜色为color宽度为thinkness
@@ -52,8 +53,7 @@ protected:
 	void Draw(CDC* pDC);
 	//画坐标轴和曲线
 	void DrawCoordinate(void);
-	//数据初始化，根据客户区大小创建图像，设置位图文件信息
-	void InitData(void);
+	
 	//图像
 	IplImage* m_pImg;
 	//图像像素数据
