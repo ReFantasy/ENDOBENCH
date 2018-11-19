@@ -360,7 +360,7 @@ void CENDOBENCH_VS2015Dlg::OnBnClickedBtntest()
 		// 计算MTF并显示曲线
 		int nNum;
 		double cx[11], cy[11];
-		CMtf mtf(&ipl_src,
+		CMtf mtf(src,
 			     n,
 			     intercept_rect.left + intercept_rect.Width() / 2,
 			     intercept_rect.top + intercept_rect.Height() / 2,
