@@ -53,15 +53,15 @@ void CMyExcel::SetInput(char* fileName)
 	catch (CMemoryException* e)
 	{
 
-		AfxMessageBox("1");
+		AfxMessageBox("1_1");
 	}
 	catch (CFileException* e)
 	{
-		AfxMessageBox("2");
+		AfxMessageBox("1_2");
 	}
 	catch (CException* e)
 	{
-		AfxMessageBox("3");
+		AfxMessageBox("1_3");
 	}
 	objSheets = objBook.GetWorksheets();
 	objSheet = objSheets.GetItem(COleVariant((short)1));
@@ -133,15 +133,15 @@ void CMyExcel::GetOutput(double& ctt, double& cier)
 	catch (CMemoryException* e)
 	{
 
-		AfxMessageBox("1");
+		AfxMessageBox("2_1");
 	}
 	catch (CFileException* e)
 	{
-		AfxMessageBox("2");
+		AfxMessageBox("2_2");
 	}
 	catch (CException* e)
 	{
-		AfxMessageBox("3");
+		AfxMessageBox("2_3");
 	}
 	objSheets = objBook.GetWorksheets();
 	objSheet = objSheets.GetItem(COleVariant((short)1));
@@ -162,7 +162,7 @@ void CMyExcel::GetOutput(double& ctt, double& cier)
 	objRange.ReleaseDispatch();
 	// ¹Ø±ÕÎÄ¼þ
 	objRange.Clear();
-	objBook.Save();
+	//objBook.Save();
 	objBook.ReleaseDispatch();
 	objBook.Close(COleVariant((short)FALSE), VOptional, VOptional);
 	objBooks.ReleaseDispatch();

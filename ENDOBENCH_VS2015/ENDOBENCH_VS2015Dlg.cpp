@@ -357,7 +357,7 @@ void CENDOBENCH_VS2015Dlg::OnBnClickedBtntest()
 		SingletonCamera::GetInstance()->RetrieveBuffer(&raw_img);
 		cv::Mat src = imread("C:\\Users\\MICCAI\\Desktop\\004.jpg");
 		cvtColor(src, src, CV_RGB2GRAY);
-		ConvertToMatImage(raw_img, src);
+		//ConvertToMatImage(raw_img, src);
 
 		IplImage ipl_src = IplImage(src);
 		
@@ -373,8 +373,10 @@ void CENDOBENCH_VS2015Dlg::OnBnClickedBtntest()
 		double cx[11], cy[11];
 		CMtf mtf(src,
 			     n,
-			     intercept_rect.left + intercept_rect.Width() / 2,
-			     intercept_rect.top + intercept_rect.Height() / 2,
+			     //intercept_rect.left + intercept_rect.Width() / 2,
+			     //intercept_rect.top + intercept_rect.Height() / 2,
+			1385,
+			1147,
 			     dPixel,
 			     dZool);
 		

@@ -68,7 +68,8 @@ CMtf::CMtf(cv::Mat src_mat,
 	for (j = 0; j < n; j++)
 	{
 		//plfDataX[j] = plfData[j + i] > 1500 ? plfData[j + i] : 0;
-		plfDataX[j] = plfData[j + i] > 10 ? plfData[j + i] : 0;
+		//plfDataX[j] = plfData[j + i] > 10 ? plfData[j + i] : 0;
+		plfDataX[j] = plfData[j + i];
 	}
 
 	int w = 1;
@@ -98,7 +99,6 @@ CMtf::CMtf(cv::Mat src_mat,
 	{
 		//ÆµÂÊÓòÈ¡Ä£
 		m_pdMtfY[i] = sqrtf(FD[i].real() * FD[i].real() + FD[i].imag() * FD[i].imag()) / D;
-		m_pdMtfY[i] = m_pdMtfY[i] * m_pdMtfY[i] * m_pdMtfY[i];
 	}
 	for (i = 0; i < n / 2; i++)
 	{
