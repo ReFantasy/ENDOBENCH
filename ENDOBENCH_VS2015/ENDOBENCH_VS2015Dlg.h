@@ -16,7 +16,6 @@
 #include <string>
 
 
-
 extern std::string config_path;
 
 #define FOV 1

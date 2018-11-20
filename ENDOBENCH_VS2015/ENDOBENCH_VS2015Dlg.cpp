@@ -17,6 +17,7 @@
 #include "Mtf.h"
 #include "ConfigFile.h"
 
+
 std::string config_path("config.ini");
 
 itas109::CSerialPort serial_port;
@@ -389,6 +390,7 @@ void CENDOBENCH_VS2015Dlg::OnBnClickedBtntest()
 	//	m_StcCurve.SetCoordinate(cx, cy, 11, 11);
 	//	m_StcCurve.InitData();
 	//}
+	
 	
 	
 }
