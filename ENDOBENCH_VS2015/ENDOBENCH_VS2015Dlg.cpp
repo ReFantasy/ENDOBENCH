@@ -317,11 +317,7 @@ void VideoThreadFunc(CENDOBENCH_VS2015Dlg *pMainthread)
 		}
 		Mat tmp;
 		ConvertToMatImage(buf_image, tmp);
-
-		cv::Mat src = imread("C:\\Users\\MICCAI\\Desktop\\004.jpg");
-		cvtColor(src, src, CV_RGB2GRAY);
-		pMainthread->ShowImage(src, IDC_PicControl);
-		//pMainthread->ShowImage(tmp, IDC_PicControl);
+		pMainthread->ShowImage(tmp, IDC_PicControl);
 		Sleep(10);
 	}
 }
@@ -352,34 +348,43 @@ void CENDOBENCH_VS2015Dlg::OnBnClickedBtntest()
 
 	// 直刀口法
 	if (status == Status::SDetection && SingletonCamera::GetInstance()->IsConnected())
-	{
+	{	
+		// 读取配置参数
+		static int n;
+		static double dPixel;
+		static double dZool;
+		static ConfigFile cf;
+
+		static int cnt_fuc_call = 1;
+		if (cnt_fuc_call == 1)
+		{
+			cf.ReadConfigFile(config_path);
+			n = cf.GetValueToInt("n");
+			dPixel = cf.GetValueToDouble("dPixel");
+			dZool = cf.GetValueToDouble("dZool");
+			n++;
+		}
+
+		// 采集相机的图像
 		SingletonCamera::image_type raw_img;
 		SingletonCamera::GetInstance()->RetrieveBuffer(&raw_img);
-		cv::Mat src = imread("C:\\Users\\MICCAI\\Desktop\\004.jpg");
-		cvtColor(src, src, CV_RGB2GRAY);
-		//ConvertToMatImage(raw_img, src);
-
-		IplImage ipl_src = IplImage(src);
+		cv::Mat src;
+		ConvertToMatImage(raw_img, src);
 		
-		// 读取配置参数
-		ConfigFile cf;
-		cf.ReadConfigFile(config_path);
-		int n = cf.GetValueToInt("n");
-		double dPixel = cf.GetValueToDouble("dPixel");
-		double dZool = cf.GetValueToDouble("dZool");
+		// 将截图到的图像区域映射回原图像
+		CRect rect;
+		GetDlgItem(IDC_PicControl)->GetWindowRect(&rect);
+		auto img_rect = MapToRawImage(intercept_rect, CRect(0, 0, rect.Width(), rect.Height()));
 
 		// 计算MTF并显示曲线
 		int nNum;
 		double cx[11], cy[11];
 		CMtf mtf(src,
-			     n,
-			     //intercept_rect.left + intercept_rect.Width() / 2,
-			     //intercept_rect.top + intercept_rect.Height() / 2,
-			1385,
-			1147,
-			     dPixel,
-			     dZool);
-		
+			n,
+			img_rect.x + img_rect.width / 2,
+			img_rect.y + img_rect.height / 2,
+			dPixel,
+			dZool);
 
 		double* pdX = mtf.GetMtfX(nNum);
 		double* pdY = mtf.GetMtfY(nNum);
@@ -396,9 +401,6 @@ void CENDOBENCH_VS2015Dlg::OnBnClickedBtntest()
 		m_StcCurve.SetCoordinate(cx, cy, 11, 11);
 		m_StcCurve.InitData();
 	}
-	
-	
-	
 }
 
 
