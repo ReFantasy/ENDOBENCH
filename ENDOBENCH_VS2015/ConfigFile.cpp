@@ -61,10 +61,11 @@ bool ConfigFile::Split(string line, string &key, string &value)
 	key = string(line.begin(), iter_equal_sign);
 	value = string(iter_equal_sign + 1, line.end());
 
-	// 去除首位空格
+	
 	
 }
 
+// 去除首位空格
 std::string ConfigFile::EraseSpace(string &s)
 {
 	if (s.empty())
