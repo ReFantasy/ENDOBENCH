@@ -16,6 +16,7 @@
 #include <string>
 #include "Mtf.h"
 #include "ConfigFile.h"
+#include "SerialPort.h"
 
 
 std::string config_path("config.ini");
@@ -84,6 +85,7 @@ void CENDOBENCH_VS2015Dlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT1, edit_SelPortNO);
 	DDX_Control(pDX, IDC_EDIT2, m_ReceiveCtrl);
 	DDX_Control(pDX, IDC_EDIT3, color_coef);
+	DDX_Control(pDX, IDC_COMBO1, combox_ctrl);
 }
 
 BEGIN_MESSAGE_MAP(CENDOBENCH_VS2015Dlg, CDialogEx)
@@ -135,11 +137,31 @@ BOOL CENDOBENCH_VS2015Dlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
-	CFont font; // 设置串口数据显示字体
+	// 设置串口数据显示字体
+	CFont font; 
 	font.CreateFont(16, 6, 0, 0, 600,
 		TRUE, FALSE, FALSE, 0, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_ROMAN, _T("Arial"));
 	m_ReceiveCtrl.SetFont(&font);
-	
+	// 获取串口号
+	using itas109::CSerialPortInfo;
+	CSerialPortInfo a;
+	list<string> m_portsList = CSerialPortInfo::availablePorts();
+	list<string>::iterator itor;
+	TCHAR m_regKeyValue[255];
+	for (itor = m_portsList.begin(); itor != m_portsList.end(); ++itor)
+	{
+#ifdef UNICODE
+		int iLength;
+		const char * _char = (*itor).c_str();
+		iLength = MultiByteToWideChar(CP_ACP, 0, _char, strlen(_char) + 1, NULL, 0);
+		MultiByteToWideChar(CP_ACP, 0, _char, strlen(_char) + 1, m_regKeyValue, iLength);
+#else
+		strcpy_s(m_regKeyValue, 255, (*itor).c_str());
+#endif
+		combox_ctrl.AddString(m_regKeyValue);
+	}
+	combox_ctrl.SetCurSel(0);
+
 	// 初始化树形控件
 	InitTreeControl();
 

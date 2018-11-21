@@ -94,6 +94,7 @@ public:
 	afx_msg void OnBnClickedButton2();
 	// 显色性编辑框控制变量
 	CEdit color_coef;
+	CComboBox combox_ctrl;
 };
 // 视频线程回调函数
 void VideoThreadFunc(CENDOBENCH_VS2015Dlg *pMainthread);
